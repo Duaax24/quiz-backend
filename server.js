@@ -15,4 +15,29 @@ app.get("/", (req, res) => {
 });
 
 // SCORE SPEICHERN
-app.post("/score", (req, res) 
+app.post("/score", (req, res) => {
+  const { name, score } = req.body;
+
+  scores.push({
+    name,
+    score
+  });
+
+  // Nach Score sortieren
+  scores.sort((a, b) => b.score - a.score);
+
+  res.json({
+    success: true
+  });
+});
+
+// LEADERBOARD LADEN
+app.get("/leaderboard", (req, res) => {
+  res.json(scores);
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server läuft auf Port " + PORT);
+});
